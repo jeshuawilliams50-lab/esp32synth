@@ -5,9 +5,7 @@
 #include "AudioTools.h"
 #include "AudioTools/AudioLibs/MaximilianDSP.h"
 
-// ==========================================
 // AUDIO OUTPUT
-// ==========================================
 
 I2SStream out;
 Maximilian maximilian(out);
@@ -19,9 +17,7 @@ const int DIN_PIN = 27;
 
 const int SAMPLE_RATE = 32000;
 
-// ==========================================
 // BUTTON MATRIX
-// ==========================================
 
 // Matrix rows
 const int rowPins[4] = {33, 14, 22, 13};
@@ -33,9 +29,7 @@ const int colPins[4] = {21, 19, 18, 5};
 // -1 = no button pressed
 volatile int activeChord = -1;
 
-// ==========================================
 // ROTARY ENCODER
-// ==========================================
 
 const int ENCODER_CLK = 23;
 const int ENCODER_DT  = 17;
@@ -61,9 +55,7 @@ unsigned long lastDebounceTime = 0;
 
 const unsigned long ENCODER_DEBOUNCE_MS = 30;
 
-// ==========================================
-// SYNTHESIZER
-// ==========================================
+// SYNTHESIZER ENGINE
 
 maxiOsc oscillators[4];
 maxiFilter filter;
@@ -72,28 +64,28 @@ maxiFilter filter;
 
 const int chordNotes[16][4] = {
 
-  // PROGRESSION 1
+  // ROW 1
 
   {51, 55, 58, 63}, // 1: Eb
   {55, 58, 62, 67}, // 2: Gm
   {56, 60, 63, 67}, // 3: Abmaj7
   {56, 59, 63, 65}, // 4: Abm6
 
-  // PROGRESSION 2
+  // ROW 2
 
   {48, 51, 55, 60}, // 5: Cm
   {51, 55, 59, 63}, // 6: Ebaug
   {48, 51, 55, 60}, // 7: Cm
   {51, 55, 58, 61}, // 8: Eb7
 
-  // PROGRESSION 3
+  // ROW 3
 
   {56, 60, 63, 68}, // 9: Ab
   {56, 59, 63, 68}, // 10: Abm
   {51, 55, 58, 63}, // 11: Eb
   {48, 52, 55, 60}, // 12: C
 
-  // PROGRESSION 4
+  // ROW 4
 
   {53, 56, 60, 65}, // 13: Fm
   {56, 59, 63, 65}, // 14: Abm6
@@ -124,17 +116,13 @@ const char* chordNames[16] = {
 // Precalculated chord frequencies
 double chordFrequencies[16][4];
 
-// ==========================================
-// MIDI TO FREQUENCY
-// ==========================================
+// MIDI NUMBER TO FREQUENCY CONVERTER
 
 double midiToFrequency(int midiNote) {
   return 440.0 * pow(2.0, (midiNote - 69) / 12.0);
 }
 
-// ==========================================
 // ROTARY ENCODER SCANNER
-// ==========================================
 
 void scanEncoder() {
 
@@ -184,9 +172,7 @@ void scanEncoder() {
   }
 }
 
-// ==========================================
-// ENCODER PUSH BUTTON
-// ==========================================
+// ENCODER PUSH BUTTON ARP TOGGLE
 
 void scanEncoderButton() {
 
@@ -220,9 +206,7 @@ void scanEncoderButton() {
   lastButtonReading = reading;
 }
 
-// ==========================================
 // MATRIX SCANNER
-// ==========================================
 
 void scanMatrix() {
 
@@ -253,9 +237,7 @@ void scanMatrix() {
   activeChord = detectedChord;
 }
 
-// ==========================================
 // AUDIO CALLBACK
-// ==========================================
 
 void play(float *output) {
 
@@ -304,9 +286,7 @@ void play(float *output) {
 
   double sound = 0.0;
 
-  // ========================================
   // STEADY CHORD MODE
-  // ========================================
 
   if (!arpMode) {
 
@@ -320,9 +300,7 @@ void play(float *output) {
     sound /= 4.0;
   }
 
-  // ========================================
   // ARPEGGIATOR MODE
-  // ========================================
 
   else {
 
@@ -348,9 +326,7 @@ void play(float *output) {
     sampleCounter++;
   }
 
-  // ========================================
   // FILTER
-  // ========================================
 
   double filtered = filter.lores(sound, 1000, 0.8);
 
@@ -359,9 +335,7 @@ void play(float *output) {
   output[1] = filtered * 0.5;
 }
 
-// ==========================================
 // SETUP
-// ==========================================
 
 void setup() {
 
@@ -417,15 +391,10 @@ void setup() {
   out.begin(cfg);
   maximilian.begin(cfg);
 
-  Serial.println("16 chords loaded!");
-  Serial.println("Default mode: STEADY CHORD");
-  Serial.println("Arpeggiator speed: 6 notes/sec");
-  Serial.println("Press encoder to change playback mode.");
+  Serial.println("Synth Updated");
+  Serial.println("STEADY CHORD MODE");
 }
-
-// ==========================================
 // MAIN LOOP
-// ==========================================
 
 void loop() {
 
