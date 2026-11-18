@@ -59,7 +59,7 @@ The ESP32 Synthesizer is a custom-built electronic musical instrument designed a
 
 ## Source Code
 
-- [synthengine.cpp]([https://github.com/wprudencio/esp32-synth/blob/main/synth-base.cpp](https://github.com/jeshuawilliams50-lab/esp32synth/blob/main/synthengine.cpp))
+- [synthengine.cpp]((https://github.com/jeshuawilliams50-lab/esp32synth/blob/main/synthengine.cpp))
 
 ---
 
