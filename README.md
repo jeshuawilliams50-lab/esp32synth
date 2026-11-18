@@ -1,7 +1,8 @@
 # esp32synth
 The ESP32 Synthesizer is a custom-built electronic musical instrument designed around the ESP32 microcontroller. The project combines embedded systems programming, digital audio synthesis, and physical hardware interfacing to create an interactive instrument capable of generating musical chords through a 4×4 button matrix.
 # Custom Hardware Synth Project
-<img width="2160" height="2880" alt="IMG_7821" src="https://github.com/user-attachments/assets/d1ee5a67-b05e-452f-a6ae-5979fc0f64b1" />
+<img width="1854" height="1102" alt="IMG_7821" src="https://github.com/user-attachments/assets/2d17f826-e362-4141-949c-c29fcb73eec1" />
+
 
 
 ---
